@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react'
 
 import { Card, FormField, Loader } from '../components'
 
-const BASEURL = 'http://localhost:8080'
+const BASEURL = 'http://localhost:8000'
 
 const RenderCards = ({ data, title }) => {
-  if (data?.length > 0) {
-    return data.map((post) => <Card key={post._id} {...post} />)
-  }
+  if (data?.length > 0) data.map((post) => <Card key={post._id} {...post} />)
 
   return (
     <h2 className="mt-5 text-xl font-bold uppercase text-[#6469ff]">{title}</h2>
@@ -26,7 +24,7 @@ const Home = () => {
     setLoading(true)
 
     try {
-      const response = await fetch(`${BASEURL}/api/v1/posts`, {
+      const response = await fetch(`${BASEURL}/api/v1/post`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

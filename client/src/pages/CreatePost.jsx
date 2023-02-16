@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { preview } from '../assets'
+import { logo, preview } from '../assets'
 import { getRandomPrompt } from '../utils'
 import { FormField, Loader } from '../components'
-
-const BASEURL = 'http://localhost:8080'
 
 const CreatePost = () => {
   const navigate = useNavigate()
@@ -31,7 +29,7 @@ const CreatePost = () => {
     if (form.prompt) {
       try {
         setGeneratingImg(true)
-        const response = await fetch(`${BASEURL}/api/v1/posts`, {
+        const response = await fetch('http://localhost:8000/api/v1/post', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -42,6 +40,7 @@ const CreatePost = () => {
         })
 
         const data = await response.json()
+        console.log(data)
         setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` })
       } catch (err) {
         alert(err)
@@ -59,7 +58,7 @@ const CreatePost = () => {
     if (form.prompt && form.photo) {
       setLoading(true)
       try {
-        const response = await fetch(`${BASEURL}/api/v1/posts`, {
+        const response = await fetch('http://localhost:8000/api/v1/post', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
